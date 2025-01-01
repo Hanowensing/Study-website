@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공부방 프로필</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f9fc;
+            font-family: Arial, sans-serif;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #005bac;
+            margin-bottom: 20px;
+            transform: translateY(-20px);
+        }
+
+        .profile-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 70%;
+        }
+
+        .profile {
+            text-align: center;
+        }
+
+        .profile img {
+            width: 70%;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .profile span {
+            display: block;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .attendance {
+            margin-top: 10px;
+        }
+
+        .attendance label {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .attendance input {
+            margin-right: 5px;
+        }
+
+        .attendance-time {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .penalty {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .penalty span {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .penalty button {
+            padding: 5px 10px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #005bac;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .penalty button:hover {
+            background-color: #003d7a;
+        }
+
+        .study-time {
+            margin-top: 20px;
+        }
+
+        .study-time span {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .study-time button {
+            padding: 5px 10px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #005bac;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .study-time button:hover {
+            background-color: #003d7a;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">부산대 공부방</div>
+    <div class="profile-list">
+        <div class="profile">
+            <img src="심슨_유빈.jpg" alt="심슨 유빈">
+            <span>이유빈</span>
+            <div class="attendance">
+                <label>
+                    <input type="checkbox" id="check-yubin" onclick="verifyLocation('time-yubin', 'check-yubin')"> 출석 체크
+                </label>
+                <div id="time-yubin" class="attendance-time"></div>
+            </div>
+            <div class="penalty">
+                <span>벌금:</span>
+                <span id="penalty-yubin">0</span>
+                <span>원</span>
+                <button onclick="updatePenalty('penalty-yubin', 20000)">+</button>
+                <button onclick="updatePenalty('penalty-yubin', -20000)">-</button>
+            </div>
+            <div class="study-time">
+                <span>공부 시간: <span id="study-time-yubin">0시간 0분</span></span>
+                <button onclick="startStudyTimer('study-time-yubin')">공부 시작</button>
+            </div>
+        </div>
+        <div class="profile">
+            <img src="심슨_동원.jpg" alt="심슨 동원" style="width: 60%; height: auto;">
+            <span>김동원</span>
+            <div class="attendance">
+                <label>
+                    <input type="checkbox" id="check-dongwon" onclick="verifyLocation('time-dongwon', 'check-dongwon')"> 출석 체크
+                </label>
+                <div id="time-dongwon" class="attendance-time"></div>
+            </div>
+            <div class="penalty">
+                <span>벌금:</span>
+                <span id="penalty-dongwon">0</span>
+                <span>원</span>
+                <button onclick="updatePenalty('penalty-dongwon', 20000)">+</button>
+                <button onclick="updatePenalty('penalty-dongwon', -20000)">-</button>
+            </div>
+            <div class="study-time">
+                <span>공부 시간: <span id="study-time-dongwon">0시간 0분</span></span>
+                <button onclick="startStudyTimer('study-time-dongwon')">공부 시작</button>
+            </div>
+        </div>
+        <div class="profile">
+            <img src="심슨_형준.jpg" alt="심슨 형준">
+            <span>한형준</span>
+            <div class="attendance">
+                <label>
+                    <input type="checkbox" id="check-hyeongjun" onclick="verifyLocation('time-hyeongjun', 'check-hyeongjun')"> 출석 체크
+                </label>
+                <div id="time-hyeongjun" class="attendance-time"></div>
+            </div>
+            <div class="penalty">
+                <span>벌금:</span>
+                <span id="penalty-hyeongjun">0</span>
+                <span>원</span>
+                <button onclick="updatePenalty('penalty-hyeongjun', 20000)">+</button>
+                <button onclick="updatePenalty('penalty-hyeongjun', -20000)">-</button>
+            </div>
+            <div class="study-time">
+                <span>공부 시간: <span id="study-time-hyeongjun">0시간 0분</span></span>
+                <button onclick="startStudyTimer('study-time-hyeongjun')">공부 시작</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BUSAN_UNIVERSITY_COORDS = { lat: 35.2323, lng: 129.0822 }; // 부산대학교 근처 좌표
+        const RADIUS = 500; // 허용 반경 (미터)
+        const studyTimers = {};
+
+        function updatePenalty(elementId, amount) {
+            const penaltyElement = document.getElementById(elementId);
+            let currentPenalty = parseInt(penaltyElement.textContent) || 0;
+            currentPenalty = Math.max(0, currentPenalty + amount); // 벌금은 0원 이하로 내려가지 않음
+            penaltyElement.textContent = currentPenalty;
+        }
+
+        function verifyLocation(timeElementId, checkboxId) {
+            if (!navigator.geolocation) {
+                alert('위치 서비스를 지원하지 않는 브라우저입니다.');
+                document.getElementById(checkboxId).checked = false;
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const userCoords = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+                    const distance = calculateDistance(
+                        BUSAN_UNIVERSITY_COORDS.lat,
+                        BUSAN_UNIVERSITY_COORDS.lng,
+                        userCoords.lat,
+                        userCoords.lng
+                    );
+
+                    if (distance <= RADIUS) {
+                        recordAttendance(timeElementId);
+                    } else {
+                        alert('출석 체크는 부산대학교 근처에서만 가능합니다.');
+                        document.getElementById(checkboxId).checked = false;
+                    }
+                },
+                (error) => {
+                    alert('위치 정보를 가져올 수 없습니다: ' + error.message);
+                    document.getElementById(checkboxId).checked = false;
+                }
+            );
+        }
+
+        function recordAttendance(timeElementId) {
+            const now = new Date();
+            const formattedTime = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeElement = document.getElementById(timeElementId);
+            timeElement.textContent = `출석 시간: ${formattedTime}`;
+        }
+
+               function calculateDistance(lat1, lng1, lat2, lng2) {
+            const R = 6371e3; // 지구 반지름 (미터)
+            const φ1 = (lat1 * Math.PI) / 180;
+            const φ2 = (lat2 * Math.PI) / 180;
+            const Δφ = ((lat2 - lat1) * Math.PI) / 180;
+            const Δλ = ((lng2 - lng1) * Math.PI) / 180;
+
+            const a =
+                Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                Math.cos(φ1) * Math.cos(φ2) *
+                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c; // 거리 (미터)
+        }
+
+        function startStudyTimer(elementId) {
+            if (!studyTimers[elementId]) {
+                studyTimers[elementId] = { hours: 0, minutes: 0, seconds: 0, interval: null };
+            }
+
+            const timer = studyTimers[elementId];
+
+            if (timer.interval) {
+                clearInterval(timer.interval);
+                timer.interval = null;
+                alert('공부 시간이 중지되었습니다.');
+            } else {
+                timer.interval = setInterval(() => {
+                    timer.seconds++;
+                    if (timer.seconds === 60) {
+                        timer.seconds = 0;
+                        timer.minutes++;
+                    }
+                    if (timer.minutes === 60) {
+                        timer.minutes = 0;
+                        timer.hours++;
+                    }
+                    document.getElementById(elementId).textContent =
+                        `${timer.hours}시간 ${timer.minutes}분 ${timer.seconds}초`;
+                }, 1000);
+                alert('공부 시간이 시작되었습니다.');
+            }
+        }
+    </script>
+</body>
+</html>
+
