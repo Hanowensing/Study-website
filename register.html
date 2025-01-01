@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공부방 가입하기</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f9fc;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .profiles {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .profile {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .form-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-group input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 250px;
+        }
+
+        .form-group button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #005bac;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #003d7a;
+        }
+    </style>
+</head>
+<body>
+    <h1>어떤 프로필을 사용하시겠습니까?</h1>
+    <div class="profiles">
+        <div class="profile" data-name="심슨_동원">
+            <img src="심슨_동원.jpg" alt="심슨_동원">
+            <span>심슨_동원</span>
+        </div>
+        <div class="profile" data-name="심슨_유빈">
+            <img src="심슨_유빈.jpg" alt="심슨_유빈">
+            <span>심슨_유빈</span>
+        </div>
+        <div class="profile" data-name="심슨_형준">
+            <img src="심슨_형준.jpg" alt="심슨_형준">
+            <span>심슨_형준</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <h1>이름을 입력하세요</h1>
+        <input type="text" id="username" placeholder="이름 입력">
+        <button id="registerBtn">등록하기</button>
+    </div>
+
+    <script>
+        let selectedProfile = null;
+
+        document.querySelectorAll('.profile').forEach(profile => {
+            profile.addEventListener('click', () => {
+                document.querySelectorAll('.profile').forEach(p => p.style.border = 'none');
+                profile.style.border = '2px solid #005bac';
+                selectedProfile = profile.getAttribute('data-name');
+            });
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            if (!selectedProfile || !username) {
+                alert('프로필과 이름을 모두 선택해주세요.');
+                return;
+            }
+
+            // Save to localStorage
+            localStorage.setItem('profile', JSON.stringify({ profile: selectedProfile, name: username }));
+            alert(`${username}님, ${selectedProfile} 프로필로 등록되었습니다!`);
+
+            // Redirect to study2.html
+            window.location.href = 'study2.html';
+        });
+    </script>
+</body>
+</html>
