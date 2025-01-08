@@ -1,0 +1,299 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    padding: 20px 0;
+    text-align: left;
+}
+
+#createRoomBtn {
+    padding: 10px 20px;
+    background-color: #005bac;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#createRoomBtn:hover {
+    background-color: #003d7a;
+}
+
+.board {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 20px auto;
+}
+
+.modal-content h2 {
+    margin: 0 0 20px 0;
+    color: #005bac;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.modal-content textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#submitRoom {
+    background-color: #005bac;
+    color: white;
+}
+
+#closeModal {
+    background-color: #6c757d;
+    color: white;
+}
+
+.join-btn {
+    padding: 8px 16px;
+    background-color: #005bac;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.join-btn:hover {
+    background-color: #003d7a;
+}
+
+.join-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.header-left {
+    display: flex;
+    gap: 10px;
+}
+
+#backBtn {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#backBtn:hover {
+    background-color: #5a6268;
+}
+
+.modal-content {
+    max-width: 500px;
+    width: 90%;
+}
+
+.modal-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.modal-content select,
+.modal-content input[type="time"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.time-settings,
+.penalty-settings,
+.rest-settings {
+    margin-bottom: 15px;
+}
+
+.penalty-settings label,
+.rest-settings label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.penalty-settings input,
+.rest-settings input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.fee-control {
+    margin-bottom: 15px;
+}
+
+.fee-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fee-input-group button {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: #005bac;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.fee-input-group button:hover {
+    background-color: #004a8c;
+}
+
+.fee-input-group input {
+    width: 100px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.fee-input-group .unit {
+    color: #666;
+}
+
+.fee-input-group input:read-only {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+}
+
+.location-settings {
+    margin-bottom: 20px;
+}
+
+.location-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.location-input-group input {
+    flex: 1;
+}
+
+.location-input-group button {
+    padding: 8px 16px;
+    background-color: #005bac;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.location-input-group button:hover {
+    background-color: #004a8c;
+}
+
+#map {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10px auto;
+        padding: 15px;
+    }
+}
+

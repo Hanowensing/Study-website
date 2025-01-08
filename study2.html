@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>독서실</title>
+    <link rel="stylesheet" href="study2.css">
+    <style>
+        .user-profile {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .user-profile img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 85px;
+            right: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 10px;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        .profile-menu button {
+            display: block;
+            width: 100%;
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .profile-menu button:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <button id="backBtn" onclick="location.href='index.html'">뒤로가기</button>
+                <button id="createRoomBtn">공부방 생성</button>
+            </div>
+        </div>
+        <div class="board">
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>공부방 이름</th>
+                        <th>생성자</th>
+                        <th>현재/최대 인원</th>
+                        <th>참가</th>
+                    </tr>
+                </thead>
+                <tbody id="roomsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 공부방 생성 모달 -->
+    <div id="createRoomModal" class="modal">
+        <div class="modal-content">
+            <h2>공부방 생성</h2>
+            <input type="text" id="roomName" placeholder="공부방 이름">
+            <textarea id="description" placeholder="공부방 설명"></textarea>
+            <input type="number" id="maxMembers" placeholder="최대 인원 수" min="2" max="10">
+            <h3>출석 규칙 설정</h3>
+            <div class="location-settings">
+                <label>출석체크 위치:</label>
+                <div class="location-input-group">
+                    <input type="text" id="attendanceLocation" placeholder="위치를 입력하세요 (예: 부산대학교 새벽벌도서관)">
+                    <button type="button" onclick="searchLocation()">위치 검색</button>
+                </div>
+                <div id="map" style="width:100%;height:300px;margin-top:10px;display:none"></div>
+                <input type="hidden" id="locationLat">
+                <input type="hidden" id="locationLng">
+            </div>
+            <div class="time-settings">
+                <label>모임 시간:</label>
+                <input type="time" id="meetingTime" required>
+            </div>
+            <div class="penalty-settings">
+                <div class="fee-control">
+                    <label>지각 벌금:</label>
+                    <div class="fee-input-group">
+                        <button type="button" onclick="adjustFee('lateFee', -1000)">-</button>
+                        <input type="text" id="lateFee" value="1000" readonly>
+                        <button type="button" onclick="adjustFee('lateFee', 1000)">+</button>
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+                
+                <div class="fee-control">
+                    <label>결석 벌금:</label>
+                    <div class="fee-input-group">
+                        <button type="button" onclick="adjustFee('absentFee', -1000)">-</button>
+                        <input type="text" id="absentFee" value="1000" readonly>
+                        <button type="button" onclick="adjustFee('absentFee', 1000)">+</button>
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+            </div>
+            <div class="rest-settings">
+                <label>주간 휴식 가능 일수:</label>
+                <input type="number" id="restDays" placeholder="2" min="0" max="7">
+            </div>
+            <div class="modal-buttons">
+                <button id="submitRoom">생성하기</button>
+                <button id="closeModal">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-profile" id="userProfile">
+        <img id="profileImage" src="" alt="프로필">
+        <div class="profile-menu" id="profileMenu">
+            <button onclick="logout()">로그아웃</button>
+        </div>
+    </div>
+
+    <script src="study2.js"></script>
+    <script>
+        // 페이지 로드 시 로그인 상태 확인
+        window.addEventListener('load', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                document.getElementById('userProfile').style.display = 'block';
+                document.getElementById('profileImage').src = `${currentUser.profile}.jpg`;
+            } else {
+                // 로그인하지 않은 경우 메인 페이지로 리다이렉트
+                window.location.href = 'index.html';
+            }
+        });
+
+        // 프로필 이미지 클릭 시 메뉴 토글
+        document.getElementById('profileImage').addEventListener('click', () => {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // 로그아웃 함수
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+
+        // 페이지 클릭 시 프로필 메뉴 닫기
+        document.addEventListener('click', (e) => {
+            const profile = document.getElementById('userProfile');
+            const menu = document.getElementById('profileMenu');
+            if (!profile.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
+

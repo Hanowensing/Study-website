@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .admin-panel {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .danger-zone {
+            margin-top: 20px;
+            padding: 20px;
+            border: 2px solid #dc3545;
+            border-radius: 5px;
+        }
+        .danger-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .danger-btn:hover {
+            background-color: #c82333;
+        }
+        #adminPassword {
+            padding: 8px;
+            margin-right: 10px;
+        }
+        .action-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .action-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel">
+        <h1>관리자 페이지</h1>
+        <div class="danger-zone">
+            <div class="action-group">
+                <h2>회원 데이터 초기화</h2>
+                <p>⚠️ 주의: 모든 회원 정보가 삭제됩니다!</p>
+                <div>
+                    <input type="password" id="adminPassword" placeholder="관리자 비밀번호">
+                    <button class="danger-btn" onclick="resetUsers()">회원 초기화</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <h2>게시판 초기화</h2>
+                <p>⚠️ 주의: 모든 공부방 정보가 삭제됩니다!</p>
+                <div>
+                    <input type="password" id="adminPassword2" placeholder="관리자 비밀번호">
+                    <button class="danger-btn" onclick="resetRooms()">게시판 초기화</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <h2>전체 데이터 초기화</h2>
+                <p>⚠️ 주의: 모든 데이터가 삭제됩니다!</p>
+                <div>
+                    <input type="password" id="adminPassword3" placeholder="관리자 비밀번호">
+                    <button class="danger-btn" onclick="resetAllData()">전체 초기화</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = '1234';
+
+        function checkPassword(passwordId) {
+            const password = document.getElementById(passwordId).value;
+            if (password !== ADMIN_PASSWORD) {
+                alert('관리자 비밀번호가 올바르지 않습니다.');
+                return false;
+            }
+            return true;
+        }
+
+        function resetUsers() {
+            if (!checkPassword('adminPassword')) return;
+            
+            if (confirm('정말로 모든 회원 정보를 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
+                localStorage.removeItem('users');
+                localStorage.removeItem('currentUser');
+                alert('모든 회원 정보가 초기화되었습니다.');
+                document.getElementById('adminPassword').value = '';
+            }
+        }
+
+        function resetRooms() {
+            if (!checkPassword('adminPassword2')) return;
+            
+            if (confirm('정말로 모든 공부방 정보를 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
+                localStorage.removeItem('rooms');
+                localStorage.removeItem('currentRoom');
+                alert('모든 공부방 정보가 초기화되었습니다.');
+                document.getElementById('adminPassword2').value = '';
+            }
+        }
+
+        function resetAllData() {
+            if (!checkPassword('adminPassword3')) return;
+            
+            if (confirm('정말로 모든 데이터를 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다!')) {
+                localStorage.clear();
+                alert('모든 데이터가 초기화되었습니다.');
+                document.getElementById('adminPassword3').value = '';
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공부방</title>
+    <link rel="stylesheet" href="studyroom.css">
+    <style>
+        .danger-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .danger-btn:hover {
+            background-color: #c82333;
+        }
+
+        .room-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="room-info">
+                <h1 id="roomName"></h1>
+                <p id="roomDescription"></p>
+            </div>
+            <div class="header-buttons">
+                <div class="room-buttons">
+                    <div id="adminControls" style="display: none;">
+                        <button id="editRoomBtn">방 설정</button>
+                        <button id="transferOwnerBtn">방장 위임</button>
+                        <button id="deleteRoomBtn" class="danger-btn">방 삭제</button>
+                    </div>
+                    <button id="leaveRoomBtn" onclick="leaveRoom()">뒤로가기</button>
+                </div>
+            </div>
+        </div>
+        <div class="members-list">
+            <h2>참여 멤버</h2>
+            <div id="membersList"></div>
+        </div>
+    </div>
+
+    <!-- 방 설정 수정 모달 -->
+    <div id="editRoomModal" class="modal">
+        <div class="modal-content">
+            <h2>방 소개 수정</h2>
+            <textarea id="editDescription" placeholder="방 설명"></textarea>
+            <div class="modal-buttons">
+                <button id="saveRoomEdit">저장</button>
+                <button id="closeEditModal">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 방장 위임 모달 -->
+    <div id="transferModal" class="modal">
+        <div class="modal-content">
+            <h2>방장 위임</h2>
+            <div id="transferMemberList"></div>
+            <div class="modal-buttons">
+                <button id="closeTransferModal">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="studyroom.js"></script>
+</body>
+</html> 

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산대 독서실</title>
+    <link rel="stylesheet" href="study.css">
+    <style>
+        .admin-access {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        .admin-access:hover {
+            opacity: 1;
+        }
+        .admin-btn {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #666;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        .admin-btn:hover {
+            background: #e9ecef;
+        }
+        .user-profile {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: none; /* 기본적으로 숨김 */
+        }
+        
+        .user-profile img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 85px;
+            right: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 10px;
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        .profile-menu button {
+            display: block;
+            width: 100%;
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .profile-menu button:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <h1>부산대 독서실에 오신 것을 환영합니다</h1>
+        <div class="button-container">
+            <a href="register.html" class="btn">독서실 회원가입</a>
+            <button class="btn" id="loginBtn">독서실 로그인</button>
+        </div>
+    </div>
+
+    <!-- 로그인한 사용자의 프로필 표시 -->
+    <div class="user-profile" id="userProfile">
+        <img id="profileImage" src="" alt="프로필">
+        <div class="profile-menu" id="profileMenu">
+            <button onclick="logout()">로그아웃</button>
+        </div>
+    </div>
+
+    <!-- 로그인 모달 -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>로그인</h2>
+            <input type="text" id="loginId" placeholder="아이디">
+            <input type="password" id="loginPassword" placeholder="비밀번호">
+            <button id="submitLogin">로그인</button>
+            <button id="closeModal">닫기</button>
+        </div>
+    </div>
+
+    <!-- 관리자 접근 버튼 -->
+    <div class="admin-access">
+        <button class="admin-btn" onclick="accessAdmin()">관리자</button>
+    </div>
+
+    <script src="study.js"></script>
+    <script>
+        function accessAdmin() {
+            const adminPassword = prompt('관리자 비밀번호를 입력하세요:');
+            if (adminPassword === '1234') {
+                window.location.href = 'admin.html';
+            } else {
+                alert('잘못된 비밀번호입니다.');
+            }
+        }
+
+        // 페이지 로드 시 로그인 상태 확인
+        window.addEventListener('load', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                // 로그인 상태이면 프로필 표시
+                document.getElementById('userProfile').style.display = 'block';
+                document.getElementById('profileImage').src = `${currentUser.profile}.jpg`;
+                
+                // 버튼 컨테이너의 내용을 공부방 들어가기 버튼만 남도록 수정
+                const buttonContainer = document.querySelector('.button-container');
+                buttonContainer.innerHTML = '<a href="study2.html" class="btn">공부방 들어가기</a>';
+            }
+        });
+
+        // 프로필 이미지 클릭 시 메뉴 토글
+        document.getElementById('profileImage').addEventListener('click', () => {
+            const menu = document.getElementById('profileMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // 로그아웃 함수
+        function logout() {
+            localStorage.removeItem('currentUser');
+            location.reload();
+        }
+
+        // 페이지 클릭 시 프로필 메뉴 닫기
+        document.addEventListener('click', (e) => {
+            const profile = document.getElementById('userProfile');
+            const menu = document.getElementById('profileMenu');
+            if (!profile.contains(e.target)) {
+                menu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
